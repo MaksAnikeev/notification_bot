@@ -1,9 +1,5 @@
-Django==4.1
-django-debug-toolbar
-django-admin-sortable2==2.1
-environs==9.5.0
-requests==2.27.1
-Pillow==8.4.0
-django-tinymce
+requests==2.28.1
+python-dotenv==0.20.0
+python-telegram-bot==13.12
 
 
