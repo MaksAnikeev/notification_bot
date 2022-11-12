@@ -19,18 +19,18 @@ def start(update, context):
     return check_status_lesson_verification(update, context)
 
 
-def send_dewman_request(dewman_token, url):
+def send_devman_request(devman_token, url):
     headers = {
-        "Authorization": dewman_token
+        "Authorization": devman_token
     }
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     return response.json()
 
 
-def send_dewman_params_request(timestamp, dewman_token, url):
+def send_dewman_params_request(timestamp, devman_token, url):
     headers = {
-        "Authorization": dewman_token
+        "Authorization": devman_token
     }
     params = {'timestamp': timestamp}
     response = requests.get(url,
@@ -60,7 +60,7 @@ def send_text(update, context, response_params):
 
 
 def check_status_lesson_verification(update, context):
-    response_params = send_dewman_request(dewman_token=dewman_token,
+    response_params = send_devman_request(devman_token=devman_token,
                                           url=url)
     if response_params['status'] == 'found':
         send_text(update, context,
@@ -73,7 +73,7 @@ def check_status_lesson_verification(update, context):
     while True:
         try:
             response_params = send_dewman_params_request(timestamp=timestamp,
-                                                         dewman_token=dewman_token,
+                                                         devman_token=devman_token,
                                                          url=url)
             if response_params['status'] == 'found':
                 send_text(update, context,
@@ -96,7 +96,7 @@ def check_status_lesson_verification(update, context):
 if __name__ == '__main__':
     load_dotenv()
     token = os.getenv("TG_BOT_TOKEN")
-    dewman_token = os.getenv("DEWMAN_TOKEN")
+    devman_token = os.getenv("DEVMAN_TOKEN")
 
     url = 'https://dvmn.org/api/long_polling/'
 
