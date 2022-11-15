@@ -6,33 +6,34 @@ import requests
 import textwrap as tw
 from dotenv import load_dotenv
 from telegram import Bot
-from telegram.ext import Updater
 
 
-def send_text(chat_id, response_params):
-    lesson_title = response_params['new_attempts'][0]['lesson_title']
-    lesson_url = response_params['new_attempts'][0]['lesson_url']
-    if response_params['new_attempts'][0]['is_negative']:
+def send_text(chat_id, reviews_params, bot):
+    lesson_title = reviews_params['new_attempts'][0]['lesson_title']
+    lesson_url = reviews_params['new_attempts'][0]['lesson_url']
+    if reviews_params['new_attempts'][0]['is_negative']:
         bot.send_message(
             chat_id=chat_id,
-            text=tw.dedent(
-                f'''Преподаватель проверил урок: "{lesson_title}"
-                
-                К сожалению, в работе нашлись ошибки. 
-                Вот ссылка на работу: {lesson_url}''')
+            text=tw.dedent(f'''
+Преподаватель проверил урок: "{lesson_title}"
+               
+К сожалению, в работе нашлись ошибки. 
+Вот ссылка на работу: {lesson_url}'''
+            )
         )
     else:
         bot.send_message(
             chat_id=chat_id,
-            text=tw.dedent(
-                f'''Преподаватель проверил урок: "{lesson_title}"
+            text=tw.dedent(f'''
+Преподаватель проверил урок: "{lesson_title}"
                 
-                Ваша работа принята!
-                Отлично! Приступайте к следующему уроку''')
+Ваша работа принята!
+Отлично! Приступайте к следующему уроку'''
+            )
         )
 
 
-def check_status_lesson_verification(chat_id, url):
+def check_status_lesson_verification(chat_id, url, devman_token, bot):
     timestamp = int(time.time())
     while True:
         try:
@@ -44,16 +45,19 @@ def check_status_lesson_verification(chat_id, url):
                 url,
                 headers=headers,
                 params=params,
-                timeout=10)
+                timeout=10
+                )
             response.raise_for_status()
-            response_params = response.json()
-            if response_params['status'] == 'found':
+            reviews_params = response.json()
+            if reviews_params['status'] == 'found':
                 send_text(
                     chat_id=chat_id,
-                    response_params=response_params)
-                timestamp = response_params['last_attempt_timestamp']
-            elif response_params['status'] == 'timeout':
-                timestamp = response_params['timestamp_to_request']
+                    reviews_params=reviews_params,
+                    bot=bot
+                    )
+                timestamp = reviews_params['last_attempt_timestamp']
+            elif reviews_params['status'] == 'timeout':
+                timestamp = reviews_params['timestamp_to_request']
 
         except requests.exceptions.ReadTimeout:
             pass
@@ -71,7 +75,8 @@ if __name__ == '__main__':
     parser.add_argument(
         'chat_id',
         type=int,
-        help='chat_id вашего телеграма')
+        help='chat_id вашего телеграма'
+    )
     args = parser.parse_args()
 
     load_dotenv()
@@ -79,9 +84,11 @@ if __name__ == '__main__':
     devman_token = os.getenv('DEVMAN_TOKEN')
 
     url = 'https://dvmn.org/api/long_polling/'
-
     bot = Bot(token=token)
-    updater = Updater(token=token, use_context=True)
 
-    check_status_lesson_verification(chat_id=args.chat_id, url=url)
-
+    check_status_lesson_verification(
+        chat_id=args.chat_id,
+        url=url,
+        devman_token=devman_token,
+        bot=bot
+    )
