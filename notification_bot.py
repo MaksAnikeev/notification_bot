@@ -3,6 +3,7 @@ import os
 import time
 
 import requests
+import textwrap as tw
 from dotenv import load_dotenv
 from telegram import Bot
 from telegram.ext import Updater
@@ -14,16 +15,21 @@ def send_text(chat_id, response_params):
     if response_params['new_attempts'][0]['is_negative']:
         bot.send_message(
             chat_id=chat_id,
-            text=f'Преподаватель проверил урок: "{lesson_title}" \n \n'
-                 f'К сожалению, в работе нашлись ошибки. \n'
-                 f'Вот ссылка на работу: {lesson_url}'
+            text=tw.dedent(
+                f'''Преподаватель проверил урок: "{lesson_title}"
+                
+                К сожалению, в работе нашлись ошибки. 
+                Вот ссылка на работу: {lesson_url}''')
         )
     else:
         bot.send_message(
             chat_id=chat_id,
-            text=f'Преподаватель проверил урок: "{lesson_title}" \n \n'
-                 f'Ваша работа принята!\n'
-                 f'Отлично! Приступайте к следующему уроку')
+            text=tw.dedent(
+                f'''Преподаватель проверил урок: "{lesson_title}"
+                
+                Ваша работа принята!
+                Отлично! Приступайте к следующему уроку''')
+        )
 
 
 def check_status_lesson_verification(chat_id, url):
