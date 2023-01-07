@@ -107,7 +107,7 @@ if __name__ == '__main__':
         chat_id=args.chat_id
         )
     )
-    logger.info("Бот запущен")
+    logger.info("Бот перезапущен")
 
     try:
         check_status_lesson_verification(
@@ -119,5 +119,3 @@ if __name__ == '__main__':
     except Exception as err:
         logger.info("Бот упал с ошибкой")
         logger.error(err)
-
-# проверка
