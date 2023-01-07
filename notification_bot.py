@@ -101,12 +101,13 @@ if __name__ == '__main__':
     logging.basicConfig(format="%(process)d %(levelname)s %(message)s")
     logger = logging.getLogger("Devbot")
     logger.setLevel(logging.INFO)
-    logger.info("Бот запущен")
+    # logger.info("Бот запущен")
     logger.addHandler(TelegramLogsHandler(
         bot=bot,
         chat_id=args.chat_id
         )
     )
+    logger.info("Бот запущен")
 
     check_status_lesson_verification(
         chat_id=args.chat_id,
