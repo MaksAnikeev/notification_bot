@@ -117,5 +117,5 @@ if __name__ == '__main__':
             bot=bot
         )
     except Exception as err:
-        logger.info("Бот упал с ошибкой")
+        logger.info("Бот упал с ошибкой:")
         logger.error(err)
