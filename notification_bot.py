@@ -75,7 +75,6 @@ def check_status_lesson_verification(chat_id, url, devman_token, bot):
                 timestamp = reviews_params['timestamp_to_request']
 
         except requests.exceptions.ReadTimeout:
-            logger.error('Превышено время ожидания')
             pass
 
         except requests.exceptions.ConnectionError:
