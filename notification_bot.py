@@ -8,6 +8,18 @@ import textwrap as tw
 from dotenv import load_dotenv
 from telegram import Bot
 
+logger = logging.getLogger("Devbot")
+
+class TelegramLogsHandler(logging.Handler):
+
+    def __init__(self, bot, chat_id):
+        super().__init__()
+        self.chat_id = chat_id
+        self.tg_bot = bot
+
+    def emit(self, record):
+        log_entry = self.format(record)
+        self.tg_bot.send_message(chat_id=self.chat_id, text=log_entry)
 
 def send_text(chat_id, reviews_params, bot):
     lesson_title = reviews_params['new_attempts'][0]['lesson_title']
@@ -74,18 +86,6 @@ def check_status_lesson_verification(chat_id, url, devman_token, bot):
             pass
 
 
-class TelegramLogsHandler(logging.Handler):
-
-    def __init__(self, bot, chat_id):
-        super().__init__()
-        self.chat_id = chat_id
-        self.tg_bot = bot
-
-    def emit(self, record):
-        log_entry = self.format(record)
-        self.tg_bot.send_message(chat_id=self.chat_id, text=log_entry)
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -103,7 +103,6 @@ if __name__ == '__main__':
     bot = Bot(token=token)
 
     logging.basicConfig(format="%(process)d %(levelname)s %(message)s")
-    logger = logging.getLogger("Devbot")
     logger.setLevel(logging.INFO)
     logger.addHandler(TelegramLogsHandler(
         bot=bot,
