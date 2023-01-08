@@ -15,21 +15,23 @@ def send_text(chat_id, reviews_params, bot):
     if reviews_params['new_attempts'][0]['is_negative']:
         bot.send_message(
             chat_id=chat_id,
-            text=tw.dedent(f'''
-Преподаватель проверил урок: "{lesson_title}"
-               
-К сожалению, в работе нашлись ошибки. 
-Вот ссылка на работу: {lesson_url}'''
+            text=tw.dedent(
+                f'''
+                Преподаватель проверил урок: "{lesson_title}"
+
+                К сожалению, в работе нашлись ошибки.
+                Вот ссылка на работу: {lesson_url}'''
             )
         )
     else:
         bot.send_message(
             chat_id=chat_id,
-            text=tw.dedent(f'''
-Преподаватель проверил урок: "{lesson_title}"
-                
-Ваша работа принята!
-Отлично! Приступайте к следующему уроку'''
+            text=tw.dedent(
+                f'''
+                Преподаватель проверил урок: "{lesson_title}"
+
+                Ваша работа принята!
+                Отлично! Приступайте к следующему уроку'''
             )
         )
 
@@ -70,6 +72,7 @@ def check_status_lesson_verification(chat_id, url, devman_token, bot):
             )
             time.sleep(10)
             pass
+
 
 class TelegramLogsHandler(logging.Handler):
 
