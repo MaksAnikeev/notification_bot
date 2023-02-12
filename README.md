@@ -46,7 +46,7 @@ $Env:CHAT_ID='..........'
 ```
 5. Запуск докер контейнера
 ```pycon
-docker run --rm -e TG_BOT_TOKEN -e DEVMAN_TOKEN -e CHAT_ID notification_bot
+docker run --rm -e TG_BOT_TOKEN -e DEVMAN_TOKEN -e CHAT_ID anikeevmaks/notification_bot
 ```
 
 Вы должны увидеть результат:
