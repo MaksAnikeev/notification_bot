@@ -33,22 +33,27 @@ python notification_bot.py
 ```
 ### 5. Запуск через Docker
 1. Установите [Docker](https://www.docker.com/get-started/)
-2. Загружаем в командную строку образ из докерхаба
+2. Переходим в папку со скаченным кодом и запускаем командную строку.
+3. Загружаем в командную строку образ из докерхаба
 ```pycon
 docker pull anikeevmaks/notification_bot:latest
 ```
-3. Запись переменных окружения в командную строку, полученных в 3м шаге:
+4. Запись переменных окружения в командную строку, полученных в 3м шаге:
 ```pycon
 $Env:TG_BOT_TOKEN = '...........'
 $Env:DEVMAN_TOKEN = '........'
 $Env:CHAT_ID='..........'
 ```
-4. Запуск докер контейнера
+5. Запуск докер контейнера
 ```pycon
-docker run --rm --name test_ notification_bot -e TG_BOT_TOKEN -e DEVMAN_TOKEN -e CHAT_ID notification_bot
+docker run --rm -e TG_BOT_TOKEN -e DEVMAN_TOKEN -e CHAT_ID notification_bot
 ```
 
 Вы должны увидеть результат:
+```pycon
+1 INFO Бот перезапущен
+```
+А также данное сообщение должно появиться в вашем чат боте
 
 ## Цели проекта
 
