@@ -1,3 +1,4 @@
+
 import argparse
 import logging
 import os
@@ -84,17 +85,18 @@ def check_status_lesson_verification(chat_id, url, devman_token, bot):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        'chat_id',
-        type=int,
-        help='chat_id вашего телеграма'
-    )
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument(
+    #     'chat_id',
+    #     type=int,
+    #     help='chat_id вашего телеграма'
+    # )
+    # args = parser.parse_args()
 
     load_dotenv()
     token = os.getenv('TG_BOT_TOKEN')
     devman_token = os.getenv('DEVMAN_TOKEN')
+    chat_id = os.getenv('CHAT_ID')
 
     url = 'https://dvmn.org/api/long_polling/'
     bot = Bot(token=token)
@@ -103,14 +105,14 @@ if __name__ == '__main__':
     logger.setLevel(logging.INFO)
     logger.addHandler(TelegramLogsHandler(
         bot=bot,
-        chat_id=args.chat_id
+        chat_id=chat_id
         )
     )
     logger.info("Бот перезапущен")
 
     try:
         check_status_lesson_verification(
-            chat_id=args.chat_id,
+            chat_id=chat_id,
             url=url,
             devman_token=devman_token,
             bot=bot

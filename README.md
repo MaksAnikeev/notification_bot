@@ -18,7 +18,9 @@ pip install -r requirements.txt
 ```
 touch .env
 ```
-Для тестирования бота добавляем токен в `.env` файл: `TG_BOT_TOKEN='токен вашего бота'`
+Для тестирования бота добавляем токен в `.env` файл: `TG_BOT_TOKEN='токен вашего бота'` 
+
+`CHAT_ID='чат ид вашего бота'` можно узнать вызвав https://t.me/userinfobot
 
 Для подключения к платформе Devman посмотрите [api Девмана](https://dvmn.org/api/docs/)
 
@@ -26,11 +28,28 @@ touch .env
 
 ### 4. Запуск
 
-Для запуска необходимо будет передать обязательный аргумент `chat_id`, его можно получить 
-отправив запрос в телеграмме @userinfobot
 ```
-python notification_bot.py 5555555
+python notification_bot.py
 ```
+### 5. Запуск через Docker
+1. Установите [Docker](https://www.docker.com/get-started/)
+2. Загружаем в командную строку образ из докерхаба
+```pycon
+docker pull anikeevmaks/notification_bot:latest
+```
+3. Запись переменных окружения в командную строку, полученных в 3м шаге:
+```pycon
+$Env:TG_BOT_TOKEN = '...........'
+$Env:DEVMAN_TOKEN = '........'
+$Env:CHAT_ID='..........'
+```
+4. Запуск докер контейнера
+```pycon
+docker run --rm --name test_ notification_bot -e TG_BOT_TOKEN -e DEVMAN_TOKEN -e CHAT_ID notification_bot
+```
+
+Вы должны увидеть результат:
+
 ## Цели проекта
 
 Код написан в учебных целях — это урок в курсе по Python и веб-разработке на сайте [Devman](https://dvmn.org).
