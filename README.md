@@ -48,6 +48,10 @@ $Env:CHAT_ID='..........'
 ```pycon
 docker run --rm -e TG_BOT_TOKEN -e DEVMAN_TOKEN -e CHAT_ID anikeevmaks/notification_bot
 ```
+Также переменные можно сразу задать при запуске контейнера:
+```pycon
+docker run --rm --env TG_BOT_TOKEN='5293067707:AAH....' --env DEVMAN_TOKEN='Token ebbb7.....' --env CHAT_ID=7048... notification_bot
+```
 
 Вы должны увидеть результат:
 ```pycon
@@ -55,6 +59,11 @@ docker run --rm -e TG_BOT_TOKEN -e DEVMAN_TOKEN -e CHAT_ID anikeevmaks/notificat
 ```
 А также данное сообщение должно появиться в вашем чат боте
 
+Примечание: для запуска контейнера под Windows нет возможности загружать переменные с файла .env, т.е.
+ниже приведенный код не будет работать:
+```pycon
+docker run --rm --env-file .env notification_bot
+```
 ## Цели проекта
 
 Код написан в учебных целях — это урок в курсе по Python и веб-разработке на сайте [Devman](https://dvmn.org).
