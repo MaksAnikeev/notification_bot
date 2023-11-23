@@ -18,9 +18,7 @@ pip install -r requirements.txt
 ```
 touch .env
 ```
-Для тестирования бота добавляем токен в `.env` файл: `TG_BOT_TOKEN='токен вашего бота'` 
-
-`CHAT_ID='чат ид вашего бота'` можно узнать вызвав https://t.me/userinfobot
+Для тестирования бота добавляем токен в `.env` файл: `TG_BOT_TOKEN='токен вашего бота'`
 
 Для подключения к платформе Devman посмотрите [api Девмана](https://dvmn.org/api/docs/)
 
@@ -28,41 +26,10 @@ touch .env
 
 ### 4. Запуск
 
+Для запуска необходимо будет передать обязательный аргумент `chat_id`, его можно получить 
+отправив запрос в телеграмме @userinfobot
 ```
-python notification_bot.py
-```
-### 5. Запуск через Docker
-1. Установите [Docker](https://www.docker.com/get-started/)
-2. Переходим в папку со скаченным кодом и запускаем командную строку.
-3. Загружаем в командную строку образ из докерхаба
-```pycon
-docker pull anikeevmaks/notification_bot:latest
-```
-4. Запись переменных окружения в командную строку, полученных в 3м шаге:
-```pycon
-$Env:TG_BOT_TOKEN = '...........'
-$Env:DEVMAN_TOKEN = '........'
-$Env:CHAT_ID='..........'
-```
-5. Запуск докер контейнера
-```pycon
-docker run --rm -e TG_BOT_TOKEN -e DEVMAN_TOKEN -e CHAT_ID anikeevmaks/notification_bot
-```
-Также переменные можно сразу задать при запуске контейнера:
-```pycon
-docker run --rm --env TG_BOT_TOKEN='5293067707:AAH....' --env DEVMAN_TOKEN='Token ebbb7.....' --env CHAT_ID=7048... notification_bot
-```
-
-Вы должны увидеть результат:
-```pycon
-1 INFO Бот перезапущен
-```
-А также данное сообщение должно появиться в вашем чат боте
-
-Примечание: для запуска контейнера под Windows нет возможности загружать переменные с файла .env, т.е.
-ниже приведенный код не будет работать:
-```pycon
-docker run --rm --env-file .env notification_bot
+python notification_bot.py 5555555
 ```
 ## Цели проекта
 
